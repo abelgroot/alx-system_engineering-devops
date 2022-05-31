@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -lna --sort=none
+ls -nav
