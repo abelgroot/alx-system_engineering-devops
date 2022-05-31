@@ -1,3 +1,2 @@
 #!/bin/bash
- 
 ls -a --format=commas --file-type
