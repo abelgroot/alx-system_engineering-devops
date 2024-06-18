@@ -1,0 +1,2 @@
+#!/bin/bash
+ls -ltd * | head -10 | cut -d " " -f 9
