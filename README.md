@@ -1,1 +1,1 @@
-shell basic
+shell basic from local
