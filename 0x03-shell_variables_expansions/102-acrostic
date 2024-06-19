@@ -1,8 +1,0 @@
-#!/bin/bash
-while IFS= read -r line; do 
-	
-	first_char= echo -n ${line} |  cut -c1  
-	decodded_message="${decodded_messages}${first_char}"
-done
-echo "$decodded_messages"
-
