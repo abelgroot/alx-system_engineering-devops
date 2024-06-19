@@ -1,0 +1,6 @@
+#!/bin/bash
+while IFS= read -r line; do 
+	encd_msg= echo ${line} | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+done
+echo "$encd_msg"
+
