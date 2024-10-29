@@ -2,4 +2,4 @@
 # This script displays a list of currently running processes for all users,
 # including processes without a TTY, in a user-oriented format with process hierarchy.
 
-ps auxeH
+ps axjf
