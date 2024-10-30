@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Ts script terminates the 4-to_infinity_and_beyond process without using kill or killall.
+
+# Get the PID of the running 4-to_infinity_and_beyond process
+pkill -f "7-highlander" --signal SIGTERM
+
