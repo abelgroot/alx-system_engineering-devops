@@ -8,7 +8,7 @@ echo $$ > "$PID_FILE"
 # Signal handler for SIGTERM
 handle_sigterm() {
   echo "I hate the kill command"
-  cleanup_and_exit
+	exit 15
 }
 
 # Signal handler for SIGINT
