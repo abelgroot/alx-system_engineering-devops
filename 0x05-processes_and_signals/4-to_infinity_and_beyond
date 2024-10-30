@@ -4,7 +4,7 @@
 function handle_exit()
 {
 	echo "Terminated"
-	exit 0
+	exit 15
 }
 
 trap handle_exit SIGTERM
