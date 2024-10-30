@@ -2,6 +2,7 @@
 # This script displays "To infinity and beyond" indefinitely with a pause.
 
 trap 'echo "I am invincible!!!"' SIGTERM
+trap 'echo "Killed"; exit 2' SIGINT
 
 while true; do
     echo "To infinity and beyond"
