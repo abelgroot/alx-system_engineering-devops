@@ -6,4 +6,6 @@ PID=$(pgrep -f "4-to_infinity_and_beyond")
 
 if [ -n "$PID" ]; then
     # Send the SIGTERM signal by writing to /proc/[PID]/task/[PID]/sig_stop
+		echo "$PID"
     echo "15" > "/proc/$PID/task/$PID/sig_stop"
+fi

@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
 # This script displays "To infinity and beyond" indefinitely with a pause.
 
-function handle_exit()
-{
-	echo "Terminated"
-	exit 15
-}
-
-trap handle_exit SIGTERM
+trap 'echo "Terminated"; exit' SIGTERM
 
 while true; do
     echo "To infinity and beyond"
