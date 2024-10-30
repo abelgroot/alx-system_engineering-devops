@@ -3,4 +3,5 @@
 
 PID=$(pgrep -f "100-process_and_pid_file")
 
-echo "$PID"
+sudo touch /var/run/mysricpt.pid
+"$PID" > /var/run/myscript.pid
