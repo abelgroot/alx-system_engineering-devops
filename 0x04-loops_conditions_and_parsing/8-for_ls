@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # This script displays the content of the current directory in a list format,
-# showing only the part of the name after the first dash.
+# showing only the part of the name after the first dash, excluding hidden files.
 
 for file in *-*; do
-    # Use parameter expansion to extract the part after the first dash
-    echo "${file#*-}"
+    # Check if the file is not hidden
+    if [[ $file != .* ]]; then
+        # Use parameter expansion to extract the part after the first dash
+        echo "${file#*-}"
+    fi
 done
