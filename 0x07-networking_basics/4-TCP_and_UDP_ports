@@ -2,24 +2,11 @@
 # This script displays listening ports with the PID and name of the program to which each socket belongs
 
 echo "Active Internet connections (only servers)"
-echo "Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name"
 
 # Display listening TCP and UDP ports with associated PID and program name
-ss -tulnpx | awk '
-/LISTEN/ || /udp/ {
-    if ($1 == "tcp" || $1 == "udp") {
-        printf "%-5s %-6s %-6s %-23s %-23s %-10s %s\n", $1, $2, $3, $4, $5, $6, $7
-    }
-}'
+netstat -tulpn
 
-echo ""
 echo "Active UNIX domain sockets (only servers)"
-echo "Proto RefCnt Flags       Type       State         I-Node   PID/Program name    Path"
 
 # Display UNIX domain sockets that are in the LISTENING state
-ss -xlnp | awk '
-/LISTEN/ {
-    if ($1 == "unix") {
-        printf "%-5s %-6s %-11s %-10s %-13s %-7s %-17s %s\n", $1, $2, $3, $4, $5, $6, $7, $8
-    }
-}'
+netstat -xlnp
