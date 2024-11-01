@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# This script displays the PID and name of processes containing "bash".
+# shellcheck disable=SC2009
+
+# Using the /proc filesystem to find processes
+for pid in /proc/[0-9]*; do
+    if [ -d "$pid" ]; then
+        # Read the command name from the status file
+        cmd=$(basename "$pid")
+        name=$(cat "$pid/comm" 2>/dev/null)
+
+        # Check if the command name contains "bash"
+        if [[ $name == *bash* ]]; then
+            echo "$cmd $name"
+        fi
+    fi
+done
