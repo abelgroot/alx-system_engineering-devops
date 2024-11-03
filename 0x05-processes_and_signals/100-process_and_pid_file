@@ -8,15 +8,16 @@ echo $$ > "$PID_FILE"
 # Signal handler for SIGTERM
 handle_sigterm() {
   echo "I hate the kill command"
-	exit 15
+  cleanup_and_exit
 }
 
 # Signal handler for SIGINT
 handle_sigint() {
   echo "Y U no love me?!"
+  cleanup_and_exit
 }
 
-# Signal handler for SIGQUIT and SIGTERM to clean up and exit
+# Signal handler for SIGQUIT to clean up and exit
 cleanup_and_exit() {
   rm -f "$PID_FILE"
   exit 0
@@ -25,7 +26,7 @@ cleanup_and_exit() {
 # Trap signals
 trap handle_sigterm SIGTERM
 trap handle_sigint SIGINT
-trap cleanup_and_exit SIGQUIT SIGTERM
+trap cleanup_and_exit SIGQUIT
 
 # Infinite loop with output
 while true; do
