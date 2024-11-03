@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# script that trap SIGTERM and SIGINT, show message for each signal.
+
+PID = $(pgrep -f "100-process_and_pid_file")
+
+echo "$PID"
