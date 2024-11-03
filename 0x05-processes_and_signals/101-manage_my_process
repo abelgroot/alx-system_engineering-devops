@@ -5,22 +5,14 @@ PROCESS_SCRIPT="./manage_my_process"
 PID_FILE="/var/run/my_process.pid"
 
 start_process() {
-    if [ -f "$PID_FILE" ]; then
-        echo "Process is already running!"
-    else
-        nohup "$PROCESS_SCRIPT" &> /dev/null &
-        echo $! > "$PID_FILE"
-        echo "manage_my_process started"
-    fi
+	nohup "$PROCESS_SCRIPT" &> /dev/null &
+	echo $! > "$PID_FILE"
+  echo "manage_my_process started"
 }
 
 stop_process() {
-    if [ -f "$PID_FILE" ]; then
-        kill "$(cat "$PID_FILE")" && rm -f "$PID_FILE"
-        echo "manage_my_process stopped"
-    else
-        echo "No process found to stop!"
-    fi
+	kill "$(cat "$PID_FILE")" && rm -f "$PID_FILE"
+	echo "manage_my_process stopped"
 }
 
 restart_process() {
