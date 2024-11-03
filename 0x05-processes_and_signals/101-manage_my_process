@@ -16,9 +16,10 @@ stop_process() {
 }
 
 restart_process() {
-    stop_process
-    start_process
-    echo "manage_my_process restarted"
+	kill "$(cat "$PID_FILE")" && rm -f "$PID_FILE"
+	nohup "$PROCESS_SCRIPT" &> /dev/null &
+	echo $! > "$PID_FILE"
+  echo "manage_my_process restarted"
 }
 
 case "$1" in
