@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 # This script displays listening ports with the PID and name of the program to which each socket belongs
 
-sudo netstat -tunlp | awk '
+sudo ss -tunlp | awk '
 BEGIN {
     print "Active Internet connections (only servers)"
     print "Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name"
 }
 {
-    if ($6 == "LISTEN") print
+    if ($1 == "tcp" || $1 == "udp") {
+        if ($5 ~ /LISTEN/) print
+    }
 }'
