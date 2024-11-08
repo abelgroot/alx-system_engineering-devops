@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # This script displays all active IPv4 IPs on the machine
 
-# Use the ip command to list IPv4 addresses and format the output
-ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+# Use the ip command to list IPv4 addresses and extract the IPs with awk
+ip -4 addr show | awk '/inet / {print $2}' | cut -d'/' -f1
