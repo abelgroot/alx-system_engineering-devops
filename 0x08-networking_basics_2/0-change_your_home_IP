@@ -4,7 +4,7 @@
 cp /etc/hosts ~/hosts.new
 
 # Update /etc/hosts with the desired IP addresses
-sudo sed -i '/127.0.0.1\s\+localhost/c\127.0.0.2\tlocalhost' /etc/hosts.new
-sudo sed -i '/facebook.com/c\8.8.8.8\tfacebook.com' /etc/hosts.new
+sed -i '/127.0.0.1\s\+localhost/c\127.0.0.2\tlocalhost' /etc/hosts.new
+sed -i '/facebook.com/c\8.8.8.8\tfacebook.com' /etc/hosts.new
 
 cp -f ~/hosts.new /etc/hosts
