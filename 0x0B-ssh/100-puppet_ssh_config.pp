@@ -1,7 +1,7 @@
-# Use $HOME to refer to the current user's home directory
-$home = $::env['HOME']
+# Get the home directory of the current user
+$home = $::home
 
-# Configure Host block for 61947-web-01
+# Append the required SSH configuration
 augeas { 'Configure SSH Host':
   context => "/files${home}/.ssh/config",
   changes => [
@@ -11,6 +11,6 @@ augeas { 'Configure SSH Host':
     "set Host[last()]/PasswordAuthentication 'no'",
     "set Host[last()]/IdentityFile '${home}/.ssh/school'",
   ],
-  onlyif  => "match Host[*]/HostName[. = '3.85.136.194'] size == 0", # Prevent duplicates
+  onlyif  => "match Host[*]/HostName[. = '3.85.136.194'] size == 0",
   require => File["${home}/.ssh/config"],
 }
