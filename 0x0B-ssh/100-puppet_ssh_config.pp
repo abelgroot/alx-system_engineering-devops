@@ -1,16 +1,16 @@
 # Get the home directory of the current user
-$home = $::home
+# Puppet manifest to configure SSH client settings
 
-# Append the required SSH configuration
-augeas { 'Configure SSH Host':
-  context => "/files${home}/.ssh/config",
-  changes => [
-    "set Host[last()+1] '61947-web-01'",
-    "set Host[last()]/HostName '3.85.136.194'",
-    "set Host[last()]/User 'ubuntu'",
-    "set Host[last()]/PasswordAuthentication 'no'",
-    "set Host[last()]/IdentityFile '${home}/.ssh/school'",
-  ],
-  onlyif  => "match Host[*]/HostName[. = '3.85.136.194'] size == 0",
-  require => File["${home}/.ssh/config"],
+# Ensure private key usage is declared
+file_line { 'Declare identity file':
+  path  => '/etc/ssh/ssh_config',
+  line  => '    IdentityFile ~/.ssh/school',
+  match => 'IdentityFile',
+}
+
+# Ensure password authentication is disabled
+file_line { 'Turn off passwd auth':
+  path  => '/etc/ssh/ssh_config',
+  line  => '    PasswordAuthentication no',
+  match => 'PasswordAuthentication',
 }
