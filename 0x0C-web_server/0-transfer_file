@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script transfers the given file content to a remote server's home directory
 
 # Check if at least 4 arguments are provided
