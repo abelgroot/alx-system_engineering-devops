@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script installs Nginx, starts it, and configures it to serve a page with "Hello World!"
 
 # Update the package list
