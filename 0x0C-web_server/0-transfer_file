@@ -13,21 +13,7 @@ IP=$2
 USERNAME=$3
 PATH_TO_SSH_KEY=$4
 
-# Create a temporary file to store the file content
-TEMP_FILE=$(mktemp)
-echo "$FILE_CONTENT" > "$TEMP_FILE"
 
 # Use scp to transfer the file to the home directory of the user on the server
-scp -i "$PATH_TO_SSH_KEY" -o StrictHostKeyChecking=no "$TEMP_FILE" "$USERNAME@$IP:~/"
-
-# Check if the scp command was successful
-if [ $? -eq 0 ]; then
-  echo "File content successfully transferred to '$USERNAME@$IP:~/'"
-else
-  echo "Error: Failed to transfer file content."
-  exit 1
-fi
-
-# Clean up the temporary file
-rm -f "$TEMP_FILE"
+scp -i "$PATH_TO_SSH_KEY" -o StrictHostKeyChecking=no "$FILE_CONTENT" "$USERNAME@$IP:~/"
 
