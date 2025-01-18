@@ -1,0 +1,13 @@
+[0;1;31m●[0m nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Sat 2025-01-18 16:39:00 EAT; 19s ago
+       Docs: man:nginx(8)
+    Process: 17380 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; [0;1;31m(code=exited, status=1/FAILURE)[0m
+
+Jan 18 16:38:59 groot systemd[1]: Starting A high performance web server and a reverse proxy server...
+Jan 18 16:39:00 groot nginx[17380]: nginx: [alert] could not open error log file: open() "/var/log/nginx/error.log" failed (2: No such file or directory)
+Jan 18 16:39:00 groot nginx[17380]: 2025/01/18 16:39:00 [emerg] 17380#17380: open() "/etc/nginx/nginx.conf" failed (2: No such file or directory)
+Jan 18 16:39:00 groot nginx[17380]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jan 18 16:39:00 groot systemd[1]: [0;1;39m[0;1;31m[0;1;39mnginx.service: Control process exited, code=exited, status=1/FAILURE[0m
+Jan 18 16:39:00 groot systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mnginx.service: Failed with result 'exit-code'.[0m
+Jan 18 16:39:00 groot systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start A high performance web server and a reverse proxy server.[0m
