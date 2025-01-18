@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script configures an Nginx server to include a 301 redirect for /redirect_me and /redirect_me/ using rewrite
+# This script configures an Nginx server to include a 301 redirect for /redirect_me using a location block
 
 # Update the package list
 apt-get update -y
@@ -10,10 +10,11 @@ apt-get install nginx -y
 # Ensure Nginx is running
 service nginx start
 
-# Add a 301 redirect configuration using rewrite in the Nginx default site
+# Add the location block below server_name
 sed -i "/server_name _;/a \\
-    rewrite ^/redirect_me(/)?$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
+    location = /redirect_me {\\
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\\
+    }" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply changes
 service nginx restart
-
