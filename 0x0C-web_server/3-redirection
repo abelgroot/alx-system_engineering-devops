@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script configures an Nginx server to include a 301 redirect for /redirect_me using rewrite
 
 # Update the package list
