@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# fix my server with adding of servername
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
