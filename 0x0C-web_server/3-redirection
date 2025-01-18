@@ -12,7 +12,6 @@ sudo service nginx start
 
 # Add a 301 redirect configuration to the Nginx default site
 sed -i "/server_name _;/a \\
-
     location /redirect_me/ {\n        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n    }" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply changes
