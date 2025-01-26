@@ -36,4 +36,4 @@ sed -i '/http {/a \    add_header X-Served-By $hostname;' /etc/nginx/nginx.conf
 nginx -t
 
 # Restart Nginx to apply changes
-systemctl restart nginx
+service nginx restart
