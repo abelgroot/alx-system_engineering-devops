@@ -26,14 +26,14 @@ sudo sed -i "/server_name _;/a \
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html > /dev/null
 
 # Configure Nginx to use the custom 404 page
-sudo sed -i "/server_name _;/a \\
+sed -i "/server_name _;/a \\
     error_page 404 /custom_404.html;\n    location = /custom_404.html {\n        root /var/www/html;\n        internal;\n    }" /etc/nginx/sites-available/default
 
 # Add the custom header to the Nginx configuration
-sudo sed -i '/http {/a \    add_header X-Served-By $hostname;' /etc/nginx/nginx.conf
+sed -i '/http {/a \    add_header X-Served-By $hostname;' /etc/nginx/nginx.conf
 
 # Test the Nginx configuration for syntax errors
-sudo nginx -t
+nginx -t
 
 # Restart Nginx to apply changes
-sudo systemctl restart nginx
+systemctl restart nginx
