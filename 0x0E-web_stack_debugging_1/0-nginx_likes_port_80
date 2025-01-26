@@ -9,7 +9,8 @@ if ! command -v nginx &> /dev/null; then
 fi
 
 # Ensure the default site configuration is linked from sites-available to sites-enabled
-ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/*
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Ensure Nginx is running
 if ! service nginx status &> /dev/null; then
