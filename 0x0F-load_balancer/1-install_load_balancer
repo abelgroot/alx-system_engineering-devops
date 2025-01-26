@@ -44,6 +44,6 @@ backend http_back
 EOF
 
 # Restart HAProxy to apply changes
-systemctl restart haproxy
+systemctl start haproxy
 systemctl enable haproxy
 
