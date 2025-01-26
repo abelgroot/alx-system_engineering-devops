@@ -1,0 +1,11 @@
+#!/bin/bash
+# This script configures Nginx to add a custom HTTP response header `X-Served-By` with the server hostname.
+
+# Add the custom header to the Nginx configuration
+sudo sed -i '/http {/a \    add_header X-Served-By $hostname;' /etc/nginx/nginx.conf
+
+# Test the Nginx configuration for syntax errors
+sudo nginx -t
+
+# Restart Nginx to apply changes
+sudo systemctl restart nginx

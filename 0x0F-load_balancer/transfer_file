@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# This script transfers the given file content to a remote server's home directory
+
+# Check if at least 4 arguments are provided
+if [ $# -lt 4 ]; then
+  echo "Usage: 0-transfer_file FILE_CONTENT IP USERNAME PATH_TO_SSH_KEY"
+  exit 1
+fi
+
+# Assign input arguments to variables
+FILE_CONTENT=$1
+IP=$2
+USERNAME=$3
+PATH_TO_SSH_KEY=$4
+
+
+# Use scp to transfer the file to the home directory of the user on the server
+scp -i "$PATH_TO_SSH_KEY" -o StrictHostKeyChecking=no "$FILE_CONTENT" "$USERNAME@$IP:~/"
+
