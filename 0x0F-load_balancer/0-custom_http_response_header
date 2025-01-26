@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This script configures Nginx to add a custom HTTP response header `X-Served-By` with the server hostname.
 
 # Add the custom header to the Nginx configuration
