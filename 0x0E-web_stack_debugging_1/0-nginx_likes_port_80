@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 # This script ensures Nginx is installed, running, and listening on all interfaces (0.0.0.0:80).
+# It also ensures the site configuration is properly linked from sites-available to sites-enabled.
 
 # Install Nginx if not already installed
 if ! command -v nginx &> /dev/null; then
     apt-get update
     apt-get install -y nginx
+fi
+
+# Ensure the default site configuration is linked from sites-available to sites-enabled
+if [ ! -f /etc/nginx/sites-enabled/default ]; then
+    ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 fi
 
 # Ensure Nginx is running
