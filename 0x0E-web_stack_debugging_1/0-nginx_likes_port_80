@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script ensures Nginx is installed, running, and listening on port 80.
+# This script ensures Nginx is installed, running, and listening on all interfaces (0.0.0.0:80).
 
 # Install Nginx if not already installed
 if ! command -v nginx &> /dev/null; then
@@ -12,12 +12,15 @@ if ! service nginx status &> /dev/null; then
     service nginx start
 fi
 
-# Check if Nginx is listening on port 80
-if ! netstat -tuln | grep ":80" &> /dev/null; then
-    # Add listen directive to Nginx configuration if missing
+# Check if Nginx is listening on all interfaces (0.0.0.0:80)
+if ! netstat -tuln | grep "0.0.0.0:80" &> /dev/null; then
+    # Add or update the listen directive in the Nginx configuration
     if ! grep -q "listen 80;" /etc/nginx/sites-available/default; then
         sed -i '/server {/a \    listen 80;' /etc/nginx/sites-available/default
     fi
+
+    # Ensure Nginx listens on all interfaces (0.0.0.0)
+    sed -i 's/listen 80;/listen 0.0.0.0:80;/g' /etc/nginx/sites-available/default
 
     # Test Nginx configuration
     nginx -t
@@ -26,10 +29,5 @@ if ! netstat -tuln | grep ":80" &> /dev/null; then
     service nginx restart
 fi
 
-# Ensure port 80 is allowed through the firewall
-if command -v ufw &> /dev/null; then
-    ufw allow 80/tcp
-fi
-
-# Verify Nginx is listening on port 80
-curl -I http://localhost:80
+# Verify Nginx is listening on all interfaces (0.0.0.0:80)
+curl -I http://0:80
