@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 # This script ensures Nginx is installed, running, and listening on all interfaces (0.0.0.0:80).
-rm /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-service nginx restart
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx stop
