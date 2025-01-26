@@ -1,9 +1,33 @@
 #!/usr/bin/env bash
-# This script configures Nginx to add a custom HTTP response header `X-Served-By` with the server hostname.
+# This script installs Nginx, starts it, and configures it to serve a page with "Hello World!"
 
-# Update the package list and install Nginx
+# Update the package list
 apt-get update -y
-apt-get install -y nginx
+
+# Install Nginx
+apt-get install nginx -y
+
+# Ensure Nginx is running
+service nginx start
+
+# Configure Nginx to serve "Hello World!" on the root page
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+
+# Set proper permissions for the web root directory
+chmod 755 /var/www/html/index.html
+
+# setup redirection
+sudo sed -i "/server_name _;/a \
+    location ~^/redirect_me(/?)$ {\
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\
+    }" /etc/nginx/sites-available/default
+
+# Create a custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html > /dev/null
+
+# Configure Nginx to use the custom 404 page
+sudo sed -i "/server_name _;/a \\
+    error_page 404 /custom_404.html;\n    location = /custom_404.html {\n        root /var/www/html;\n        internal;\n    }" /etc/nginx/sites-available/default
 
 # Add the custom header to the Nginx configuration
 sudo sed -i '/http {/a \    add_header X-Served-By $hostname;' /etc/nginx/nginx.conf
