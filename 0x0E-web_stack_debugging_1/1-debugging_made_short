@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# This script ensures Nginx is installed, running, and listening on all interfaces (0.0.0.0:80).
+# Configures Nginx to listen on port 80 and ensures it's running.
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-service nginx start
-pkill nginx
+sed -i 's/listen [::]:80 default_server;/listen 0.0.0.0:80 default_server;/' /etc/nginx/sites-available/default
+nginx -t && service nginx restart
+curl -I http://0:80
