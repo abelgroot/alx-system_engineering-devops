@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Script to generate a MySQL dump and compress it into a tar.gz archive
 
 # Check if the password argument is provided
