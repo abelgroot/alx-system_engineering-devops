@@ -27,7 +27,7 @@ fi
 
 # Compress the dump into a tar.gz archive
 echo "Compressing MySQL dump..."
-tar -czvf "$ARCHIVE_NAME" "$BACKUP_FILE"
+tar -czf "$ARCHIVE_NAME" "$BACKUP_FILE"
 
 # Check if the compression was successful
 if [ $? -ne 0 ]; then
