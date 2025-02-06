@@ -2,24 +2,25 @@
 # Script to configure Nginx to run as the nginx user and listen on port 8080
 
 # Stop Nginx if it is running
-if systemctl is-active --quiet nginx; then
-    systemctl stop nginx
+if sudo systemctl is-active --quiet nginx; then
+    sudo systemctl stop nginx
 fi
 
 # Modify Nginx configuration to run as the nginx user
-sed -i 's/^user .*;/user nginx;/' /etc/nginx/nginx.conf
+sudo sed -i 's/^user .*;/user nginx;/' /etc/nginx/nginx.conf
 
-# Modify Nginx configuration to listen on all active IPs on port 8080
-sed -i 's/listen .*;/listen 8080;/' /etc/nginx/sites-enabled/default
+# Modify Nginx configuration to listen on port 8080 (only if not already set)
+sudo sed -i 's/listen [0-9]\+;/listen 8080;/' /etc/nginx/sites-enabled/default
 
-# Ensure the nginx user has the necessary permissions
-chown -R nginx:nginx /var/log/nginx /var/cache/nginx
+# change permission
+chmod 644 /etc/nginx/nginx.conf
 
 # Start Nginx
-systemctl start nginx
+sudo systemctl start nginx
 
 # Verify Nginx is running as the nginx user
-ps auxff | grep ngin[x]
+ps aux | grep '[n]ginx'
 
 # Verify Nginx is listening on port 8080
-nc -z 0 8080; echo $?
+nc -z 0 8080 && echo "Nginx is listening on port 8080"
+
