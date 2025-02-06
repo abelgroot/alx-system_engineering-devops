@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
-# Ensures Nginx runs as the nginx user and listens on port 8080.
-sed -i 's/^user .*/user nginx;/' /etc/nginx/nginx.conf
-sed -i 's/listen 80 default_server;/listen 8080 default_server;/' /etc/nginx/sites-available/default
-sed -i 's/listen \[::\]:80 default_server;/listen [::]:8080 default_server;/' /etc/nginx/sites-available/default
-chown nginx:nginx /var/log/nginx /var/lib/nginx /var/www/html
-chmod -R 755 /var/www/html
-systemctl stop apache2 2>/dev/null || true
-systemctl disable apache2 2>/dev/null || true
-systemctl restart nginx
+# Script to configure Nginx to run as the nginx user and listen on port 8080
+
+# Stop Nginx if it is running
+if systemctl is-active --quiet nginx; then
+    systemctl stop nginx
+fi
+
+# Modify Nginx configuration to run as the nginx user
+sed -i 's/^user .*;/user nginx;/' /etc/nginx/nginx.conf
+
+# Modify Nginx configuration to listen on all active IPs on port 8080
+sed -i 's/listen .*;/listen 8080;/' /etc/nginx/sites-enabled/default
+
+# Ensure the nginx user has the necessary permissions
+chown -R nginx:nginx /var/log/nginx /var/cache/nginx
+
+# Start Nginx
+systemctl start nginx
+
+# Verify Nginx is running as the nginx user
+ps auxff | grep ngin[x]
+
+# Verify Nginx is listening on port 8080
+nc -z 0 8080; echo $?
