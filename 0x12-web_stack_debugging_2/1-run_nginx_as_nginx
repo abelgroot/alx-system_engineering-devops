@@ -19,7 +19,7 @@ chmod 644 /etc/nginx/nginx.conf
 sudo systemctl start nginx
 
 # Verify Nginx is running as the nginx user
-ps aux | grep '[n]ginx'
+pgrep '[n]ginx'
 
 # Verify Nginx is listening on port 8080
 nc -z 0 8080 && echo "Nginx is listening on port 8080"
