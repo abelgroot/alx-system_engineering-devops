@@ -15,12 +15,11 @@ sudo sed -i 's/listen [0-9]\+;/listen 8080;/' /etc/nginx/sites-enabled/default
 # change permission
 chmod 644 /etc/nginx/nginx.conf
 
+#kill exisitng process
+pkill apache2
+
 # Start Nginx
-sudo systemctl start nginx
+sudo -u nginx service nginx start
 
-# Verify Nginx is running as the nginx user
-pgrep '[n]ginx'
 
-# Verify Nginx is listening on port 8080
-nc -z 0 8080 && echo "Nginx is listening on port 8080"
 
