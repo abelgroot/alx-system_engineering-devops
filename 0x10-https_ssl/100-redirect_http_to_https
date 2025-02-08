@@ -1,0 +1,38 @@
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+    maxconn 2000
+
+defaults
+    log global
+    option tcplog
+    option dontlognull
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+    retries 3
+    option redispatch
+    maxconn 2000
+
+# Redirect HTTP (port 80) to HTTPS (port 443)
+frontend http_redirect
+    bind *:80
+    redirect scheme https code 301 if !{ ssl_fc }
+
+# Handle HTTPS traffic (port 443)
+frontend https_front
+    bind *:443 ssl crt /etc/letsencrypt/live/www.eregnayesecurity.tech/haproxy.pem
+    http-request add-header X-Forwarded-Proto https if { ssl_fc }
+    default_backend http_back
+
+# Backend servers
+backend http_back
+    balance roundrobin
+    server web-01 3.85.136.194:80 check
+    server web-02 54.90.0.18:80 check
