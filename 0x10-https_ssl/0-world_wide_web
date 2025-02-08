@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Function to get DNS record information for a subdomain
+
+get_dns_record() {
+    local domain=$1
+    local subdomain=$2
+    local full_domain="${subdomain}.${domain}"
+    
+    # Use dig and awk to extract relevant information
+    result=$(dig "$full_domain" | awk '/ANSWER SECTION:/{ getline; print $5 }')
+    if [[ -n $result ]]; then
+        echo "The subdomain $subdomain is a A record and points to $result"
+    fi
+}
+
+# Check if the domain argument is provided
+if [[ -z "$1" ]]; then
+    echo "Error: Domain name is required."
+    exit 1
+fi
+
+domain="$1"
+subdomain="$2"
+
+# If subdomain is provided, display information for the specified subdomain
+if [[ -n "$subdomain" ]]; then
+    get_dns_record "$domain" "$subdomain"
+else
+    # Default subdomains to audit
+    default_subdomains=("www" "lb-01" "web-01" "web-02")
+    
+    # Loop through each default subdomain and display its information
+    for sd in "${default_subdomains[@]}"; do
+        get_dns_record "$domain" "$sd"
+    done
+fi

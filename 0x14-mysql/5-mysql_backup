@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Script to generate a MySQL dump and compress it into a tar.gz archive
+
+# Check if the password argument is provided
+if [ -z "$1" ]; then
+    echo "Error: MySQL password not provided."
+    echo "Usage: $0 <mysql_password>"
+    exit 1
+fi
+
+# Variables
+MYSQL_USER="root"
+MYSQL_PASSWORD="$1"
+BACKUP_FILE="backup.sql"
+DATE_FORMAT=$(date +"%d-%m-%Y")
+ARCHIVE_NAME="${DATE_FORMAT}.tar.gz"
+
+# Generate MySQL dump
+echo "Generating MySQL dump..."
+mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --all-databases > "$BACKUP_FILE"
+
+# Check if the dump was successful
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to generate MySQL dump."
+    exit 1
+fi
+
+# Compress the dump into a tar.gz archive
+echo "Compressing MySQL dump..."
+tar -czf "$ARCHIVE_NAME" "$BACKUP_FILE"
+
+# Check if the compression was successful
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to compress MySQL dump."
+    exit 1
+fi
+
+# Clean up the uncompressed dump file
+echo "Cleaning up..."
+rm -f "$BACKUP_FILE"
+
+echo "Backup completed successfully: $ARCHIVE_NAME"
