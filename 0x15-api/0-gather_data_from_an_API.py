@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 This script retrieves and displays the TODO
 list progress for a given employee ID
