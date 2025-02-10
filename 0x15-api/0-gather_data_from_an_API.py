@@ -1,7 +1,14 @@
 #!/usr/bin/python3
 
-import requests
+"""
+This script retrieves and displays the TODO
+list progress for a given employee ID
+using the JSONPlaceholder API. It uses urllib to make HTTP requests.
+"""
+
+import json
 import sys
+import urllib.request
 
 
 def get_employee_todo_progress(employee_id):
@@ -14,39 +21,43 @@ def get_employee_todo_progress(employee_id):
     Returns:
         None
     """
-    # Define the base URL for the API
     base_url = "https://jsonplaceholder.typicode.com"
 
-    # Fetch employee details
-    employee_url = f"{base_url}/users/{employee_id}"
-    employee_response = requests.get(employee_url)
-    if employee_response.status_code != 200:
-        print(f"Error: Unable to fetch data for employee ID {employee_id}")
-        return
-    employee_data = employee_response.json()
-    employee_name = employee_data.get("name")
+    try:
+        # Fetch employee details
+        employee_url = f"{base_url}/users/{employee_id}"
+        with urllib.request.urlopen(employee_url) as response:
+            employee_data = json.loads(response.read().decode('utf-8'))
 
-    # Fetch TODO list for the employee
-    todo_url = f"{base_url}/users/{employee_id}/todos"
-    todo_response = requests.get(todo_url)
-    if todo_response.status_code != 200:
-        print(f"Error: Unable to fetch TODO \
-              list for employee ID {employee_id}")
-        return
-    todo_list = todo_response.json()
+        if not employee_data:
+            print(f"Error: No data found for employee ID {employee_id}")
+            return
 
-    # Calculate total and completed tasks
-    total_tasks = len(todo_list)
-    completed_tasks = [task for task in todo_list if task.get("completed")]
-    num_completed_tasks = len(completed_tasks)
+        employee_name = employee_data.get("name")
 
-    # Print the first line with employee name and task progress
-    print(f"Employee {employee_name} is done \
-          with tasks({num_completed_tasks}/{total_tasks}):")
+        # Fetch TODO list for the employee
+        todo_url = f"{base_url}/users/{employee_id}/todos"
+        with urllib.request.urlopen(todo_url) as response:
+            todo_list = json.loads(response.read().decode('utf-8'))
 
-    # Print the titles of completed tasks
-    for task in completed_tasks:
-        print(f"\t {task.get('title')}")
+        # Calculate total and completed tasks
+        total_tasks = len(todo_list)
+        completed_tasks = [task for task in todo_list if task.get("completed")]
+        num_completed_tasks = len(completed_tasks)
+
+        # Print the first line with employee name and task progress
+        print(f"Employee {employee_name} is done with
+              tasks({num_completed_tasks}/{total_tasks}): ")
+
+        # Print the titles of completed tasks
+        for task in completed_tasks:
+            print(f"\t {task.get('title')}")
+
+    except urllib.error.HTTPError as e:
+        print(f"HTTP Error: {e.code} - Unable to fetch data
+              for employee ID {employee_id}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 
 if __name__ == "__main__":
