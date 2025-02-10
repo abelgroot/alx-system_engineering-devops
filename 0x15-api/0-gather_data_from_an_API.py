@@ -45,7 +45,7 @@ def get_employee_todo_progress(employee_id):
         num_completed_tasks = len(completed_tasks)
 
         # Print the first line with employee name and task progress
-        print(f"Employee {employee_name} is done with
+        print(f"Employee {employee_name} is done with\
               tasks({num_completed_tasks}/{total_tasks}): ")
 
         # Print the titles of completed tasks
@@ -53,7 +53,7 @@ def get_employee_todo_progress(employee_id):
             print(f"\t {task.get('title')}")
 
     except urllib.error.HTTPError as e:
-        print(f"HTTP Error: {e.code} - Unable to fetch data
+        print(f"HTTP Error: {e.code} - Unable to fetch data\
               for employee ID {employee_id}")
     except Exception as e:
         print(f"An error occurred: {e}")
