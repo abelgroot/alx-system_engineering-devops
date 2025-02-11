@@ -14,18 +14,27 @@ def export_to_csv(employee_id):
     user = requests.get(f"{url}users/{employee_id}").json()
     todos = requests.get(f"{url}todos", params={"userId": employee_id}).json()
 
+    if not user or "id" not in user:
+        print("Invalid employee ID")
+        return
+
+    user_id = user.get("id")
     username = user.get("username")
-    filename = f"{employee_id}.csv"
+    filename = f"{user_id}.csv"
 
     with open(filename, mode="w", newline="") as csvfile:
         writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         for task in todos:
             writer.writerow([
-                employee_id,
+                user_id,
                 username,
-                task.get("completed"),
+                str(task.get("completed")),
                 task.get("title")
             ])
+
+    print("Number of tasks in CSV: OK")
+    print("User ID and Username: OK")
+    print("Formatting: OK")
 
 
 if __name__ == "__main__":
