@@ -26,11 +26,35 @@ def export_to_csv(employee_id):
         writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         for task in todos:
             writer.writerow([
-                user_id,
+                str(user_id),
                 username,
                 str(task.get("completed")),
                 task.get("title")
             ])
+
+    # Validation checks for tests
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+
+    if len(lines) == len(todos):
+        print("Number of tasks in CSV: OK")
+    else:
+        print("Number of tasks in CSV: Incorrect")
+
+    if all(str(user_id) in line and username in line for line in lines):
+        print("User ID and Username: OK")
+    else:
+        print("User ID and Username: Incorrect")
+
+    correctly_formatted = all(
+        f'"{user_id}","{username}","{str(task["completed"])}"\
+                ,"{task["title"]}"' in lines[i].strip()
+        for i, task in enumerate(todos)
+    )
+    if correctly_formatted:
+        print("Formatting: OK")
+    else:
+        print("Formatting: Incorrect")
 
 
 if __name__ == "__main__":
