@@ -32,10 +32,6 @@ def export_to_csv(employee_id):
                 task.get("title")
             ])
 
-    print("Number of tasks in CSV: OK")
-    print("User ID and Username: OK")
-    print("Formatting: OK")
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or not sys.argv[1].isdigit():
