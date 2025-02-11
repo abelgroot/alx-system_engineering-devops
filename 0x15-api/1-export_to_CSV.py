@@ -33,7 +33,6 @@ def export_to_csv(employee_id):
             ])
 
 
-
 if __name__ == "__main__":
     if len(sys.argv) != 2 or not sys.argv[1].isdigit():
         print("Usage: ./1-export_to_CSV.py <employee_id>")
