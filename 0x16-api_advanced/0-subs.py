@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Module to query the Reddit API and return the number of subscribers for a given subreddit.
+Module to query the Reddit API and return the number
+of subscribers for a given subreddit.
 """
 
 import requests
@@ -8,7 +9,8 @@ import requests
 
 def number_of_subscribers(subreddit):
     """
-    Queries the Reddit API and returns the number of subscribers for a given subreddit.
+    Queries the Reddit API and returns the number of
+    subscribers for a given subreddit.
 
     Args:
         subreddit (str): The name of the subreddit.
@@ -37,5 +39,4 @@ def number_of_subscribers(subreddit):
             # Handle cases where the JSON structure is unexpected
             return 0
     else:
-        # Handle cases where the subreddit is invalid or other errors occur
         return 0
