@@ -7,6 +7,6 @@ exec { 'fix_wp_settings':
 }
 
 # Restart Apache after applying the fix
-exec {
+exec { 'restart_apache':
     command => '/usr/sbin/apachectl restart',
 }
