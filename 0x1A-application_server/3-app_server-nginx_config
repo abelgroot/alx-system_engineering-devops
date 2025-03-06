@@ -1,0 +1,38 @@
+# Configures Nginx to serve routes for AirBnB_clone_v2.
+
+server {
+    # Listen on port 80 for both IPv4 and IPv6
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    # Use the server's public IP or domain
+    server_name 104.196.168.90;
+
+    # Custom response header
+    add_header X-Served-By 375-web-01;
+
+    # Proxy requests to Gunicorn running Flask on port 5000 (Static pages)
+    location /airbnb-onepage/ {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+    }
+
+    # Proxy requests to Gunicorn running Flask on port 5001 (Dynamic pages)
+    location ~ ^/airbnb-dynamic/number_odd_or_even/(\d+)$ {
+        proxy_pass http://127.0.0.1:5001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+    }
+
+    # 404 error page
+    error_page 404 /404.html;
+    location = /404.html {
+        root /var/www/html;
+        internal;
+    }
+}
